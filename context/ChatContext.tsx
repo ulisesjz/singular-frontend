@@ -69,7 +69,7 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
   const [isTyping, setIsTyping] = useState(false)
   //const assistantId = 'asst_idxwrgJMC4ZDty85dg5CnCYo';
-  const assistantId = process.env.NEXT_PUBLIC_ASSISTANT_ID;
+  const assistantId = process.env.NEXT_PUBLIC_ASSISTANT_ID ?? '';
 
   console.log(assistantId);
 
@@ -99,6 +99,10 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
             setActiveThreadId(pendingThread.threadId);
           } else {
             // Si no hay thread pendiente, crear uno
+            if (!assistantId) {
+              console.error('Assistant ID no configurado');
+              return;
+            }
             const newPending = await createThread(
               assistantId,
               sessionData.email
@@ -128,6 +132,10 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
 
     //crear nuevo pending thread
     if (userEmail) {
+      if (!assistantId) {
+        console.error('Assistant ID no configurado');
+        return;
+      }
       const newPending = await createThread(assistantId, userEmail);
 
       if (newPending) {
