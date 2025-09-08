@@ -68,7 +68,7 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
   const [loadingMessage, setLoadingMessage] = useState(false);
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
   const [isTyping, setIsTyping] = useState(false)
-  const assistantId = 'asst_ZnP1Le3iHJ4qbnZrRz9Ej8AX';
+  const assistantId = 'asst_idxwrgJMC4ZDty85dg5CnCYo';
 
   useEffect(() => {
     const fetchData = async () => {
