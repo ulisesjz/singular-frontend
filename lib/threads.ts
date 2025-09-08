@@ -25,9 +25,10 @@ export const createThread = async (
   }
 };
 
-export const getThreads = async (userEmail: string) => {
+export const getThreads = async () => {
   try {
-    const res = await fetch(`/api/threads?userEmail=${userEmail}`);
+    const url = `/api/threads`;
+    const res = await fetch(url);
     const data = await res.json();
     const thread = data.threads?.[0];
 

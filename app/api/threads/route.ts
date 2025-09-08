@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
-import { createThread, getThreadsByUserEmail, connectDB } from '../../../lib/db';
+import { createThread, getThreadsByUserEmail, connectDB, getUserByEmail } from '../../../lib/db';
+import { auth } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
 
@@ -37,15 +38,24 @@ export async function POST(request: Request): Promise<Response> {
   }
 }
 
-export async function GET(request: Request): Promise<Response> {
+export async function GET(): Promise<Response> {
   try {
-    const { searchParams } = new URL(request.url);
-    const userEmail = searchParams.get('userEmail');
+    const session = await auth();
+    const userEmail = session?.user?.email;
 
     if (!userEmail) {
       return new NextResponse(
         JSON.stringify({ error: 'userEmail parameter is required' }),
         { status: 400, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const user = await getUserByEmail(userEmail);
+
+    if (!user) {
+      return new NextResponse(
+        JSON.stringify({ error: 'User not found' }),
+        { status: 404, headers: { 'Content-Type': 'application/json' } }
       );
     }
 

@@ -43,21 +43,21 @@ interface ChatContextType {
 
 const ChatContext = createContext<ChatContextType>({
   threads: [],
-  setThreads: () => {},
+  setThreads: () => { },
   activeThreadId: null,
-  setActiveThreadId: () => {},
+  setActiveThreadId: () => { },
   pendingThreadId: null,
-  setPendingThreadId: () => {},
+  setPendingThreadId: () => { },
   userEmail: null,
-  handleFirstMessage: async () => {},
-  handleDeleteThread: async () => {},
+  handleFirstMessage: async () => { },
+  handleDeleteThread: async () => { },
   assistantId: '',
   chatHistory: [],
-  setChatHistory: () => {},
+  setChatHistory: () => { },
   loadingMessage: false,
-  setLoadingMessage: () => {},
+  setLoadingMessage: () => { },
   isTyping: false,
-  setIsTyping: () => {}
+  setIsTyping: () => { }
 });
 
 export function ChatProvider({ children }: { children: React.ReactNode }) {
@@ -81,7 +81,7 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
           return;
         }
         setUserEmail(sessionData.email);
-        const data = (await getThreads(sessionData.email)) as {
+        const data = (await getThreads()) as {
           threads: Thread[];
         };
 
