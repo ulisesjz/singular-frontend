@@ -335,7 +335,7 @@ export default function page({ }: Props) {
   };
 
   if (isLoading) {
-    return <Loading />;
+    return <div className='w-full h-dvh'><Loading /></div>;
   }
   return (
     <motion.div
