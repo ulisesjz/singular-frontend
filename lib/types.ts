@@ -33,7 +33,7 @@ export type QuestionStep = {
   typeInput: string;
   title: string;
   subtitle?: string;
-  options?: string[];
+  options?: {title: string,img: string}[];
   required: boolean;
   orderNumber: number;
   createdAt: string;

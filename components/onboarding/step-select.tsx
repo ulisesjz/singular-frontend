@@ -71,8 +71,8 @@ export default function StepSelect({ step,stateIndex, register, errors, onClick 
         >
           {step.options?.map((item) => (
             <button
-              key={item}
-              onClick={() => onClick(item)}
+              key={item.img}
+              onClick={() => onClick(item.title)}
               className={clsx(
                 `h-28 w-full max-md:max-w-32 py-2 px-4 rounded-xl border-[1.3px] text-sm font-medium transition hover:bg-[#DDF4FF] hover:text-[#1899D6] hover:border-[#84D8FF]  `,
                 step.options?.length == 3
@@ -81,16 +81,16 @@ export default function StepSelect({ step,stateIndex, register, errors, onClick 
               )}
             >
               <div className="flex flex-col items-center justify-center gap-2">
-              {stateIndex == 3 && (
+              {item.img && (
                 <Image
-                  src={countryFlags[item] || '/flags/default.png'}
-                  alt={`Bandera de ${item}`}
+                  src={`/assets/images/flags/${item.img}.svg` || '/flags/default.png'}
+                  alt={`Bandera de ${item.title}`}
                   width={63}
                   height={43}
                   className="object-cover"
                 />
               )}
-                <span>{item}</span>
+                <span>{item.title}</span>
               </div>
             </button>
           ))}

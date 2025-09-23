@@ -216,7 +216,7 @@ export default function page({ }: Props) {
     mode: 'onChange'
   });
 
-  const name = watch('689144de4ef2d2913aa2287d');
+  const name = watch(!isLoading ? (isQuestionStep(steps[1]) && steps[1]._id || '') : '');
 
   const handleSteps = async (action: Action) => {
     if (

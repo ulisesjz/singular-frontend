@@ -71,8 +71,6 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
   //const assistantId = 'asst_idxwrgJMC4ZDty85dg5CnCYo';
   const assistantId = process.env.NEXT_PUBLIC_ASSISTANT_ID ?? '';
 
-  console.log(assistantId);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
