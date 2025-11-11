@@ -289,7 +289,21 @@ export default function DashboardClient({
                   <div className="max-w-3xl w-full mx-auto px-4">
                     <Markdown
                       key={`${index}-${msg.content.length}`}
-                      className="prose-lg dark:prose-invert text-base leading-relaxed max-w-none text-foreground"
+                      className="prose prose-lg dark:prose-invert text-base leading-relaxed max-w-none text-foreground"
+                      components={{
+                        ul: ({ node, ...props }) => (
+                          <ul
+                            className="list-disc list-outside pl-5 space-y-1"
+                            {...props}
+                          />
+                        ),
+                        ol: ({ node, ...props }) => (
+                          <ol
+                            className="list-decimal list-outside pl-5 space-y-1"
+                            {...props}
+                          />
+                        )
+                      }}
                     >
                       {msg.content}
                     </Markdown>
