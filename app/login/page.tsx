@@ -11,7 +11,6 @@ import {
   CardTitle,
   CardContent
 } from '@/components/ui/card';
-import { doSocialLogin, doLogout } from './actions';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -40,7 +39,7 @@ export default function LoginPage() {
         <CardHeader>
           <CardTitle className="text-2xl">Login</CardTitle>
           <CardDescription>
-            Use your email or Google account to sign in.
+            Use your email to sign in.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -65,12 +64,6 @@ export default function LoginPage() {
             <Button type="submit" className="w-full">
               Login
             </Button>
-          </form>
-          <hr className="my-4" />
-          <form action={doSocialLogin}>
-            <button className="text-black border-2 border-black p-2 rounded-md w-full hover:bg-black hover:text-white" type="submit" name="action" value="google">
-              Sign In With Google
-            </button>
           </form>
         </CardContent>
         <CardFooter>
