@@ -267,8 +267,14 @@ export default function page({ }: Props) {
         assistantId,
         userEmail
       );
-      setPendingThreadId(threadId)
-      sendAnswers(userId, answers);
+
+      if (threadId) {
+        setPendingThreadId(threadId);
+      } else {
+        console.warn('No threadId returned for onboarding thread');
+      }
+
+      await sendAnswers(userId, answers);
       dispatch({ type: 'END' });
     } catch (error) {
       console.error('Error en handleSendData:', error);
@@ -445,9 +451,9 @@ export default function page({ }: Props) {
                 transition: { duration: 0.5, delay: 1 * 0.3 }
               }}
             >
-              <span className="text-[2rem]">
-                ¡Bienvenido, <span className="font-medium">{name}</span>! :{')'}
-              </span>
+                <span className="text-[2rem]">
+                  Hola, <span className="font-medium">{name}</span> :{')'}
+                </span>
             </TextFadeIn>
             <div className="grid font-light">
               <TextFadeIn

@@ -8,7 +8,7 @@ import { InputMain } from '@/components/ui/inputMain';
 import CardsContainer from '@/components/CardsContainer';
 
 import { createThread, getThreadById, getThreads } from '@/lib/threads';
-import { getCardsDetails, getUser, streamAssistantReply } from '@/lib/api';
+import { fetchFormattedAnswers, getCardsDetails, streamAssistantReply } from '@/lib/api';
 import { Card, ChatMessage, User } from '@/lib/types';
 import { Loading, LoadingCards } from '@/components/loading';
 import { cn } from '@/lib/utils';
@@ -47,6 +47,7 @@ export default function DashboardClient({
   } = useChatContext();
   const [assistantId, setAssistantId] = useState<string | null>(null);
   const [flagReload, setFlagReload] = useState(true);
+  const [onboardingSummary, setOnboardingSummary] = useState('');
 
   // Chat states
   const [message, setMessage] = useState('');
@@ -63,6 +64,24 @@ export default function DashboardClient({
       setIsMobile(true);
     }
   }, []);
+
+  useEffect(() => {
+    const loadOnboardingSummary = async () => {
+      try {
+        const result = await fetchFormattedAnswers(userId);
+        console.log('[Chat] fetchFormattedAnswers result', result);
+        const summary = result?.formattedAnswers;
+
+        if (typeof summary === 'string' && summary.trim().length > 0) {
+          setOnboardingSummary(summary.trim());
+        }
+      } catch (error) {
+        console.error('Error fetching onboarding summary:', error);
+      }
+    };
+
+    loadOnboardingSummary();
+  }, [userId]);
 
   //Cargamos el thread
   useEffect(() => {
@@ -179,7 +198,18 @@ export default function DashboardClient({
         assistantId: assistantIdUpdated,
         threadId,
         userMessage: message,
-        instruction: LINEAMIENTO_INSTRUCTION
+        instruction: (() => {
+          const instructionPayload = [LINEAMIENTO_INSTRUCTION.trim(), onboardingSummary && `User onboarding profile:\n${onboardingSummary}`]
+            .filter(Boolean)
+            .join('\n\n');
+
+          // Debug only: surface what we are about to send to the backend
+          console.log('[Chat] instruction payload', {
+            length: instructionPayload.length,
+            preview: instructionPayload.slice(0, 200),
+          });
+          return instructionPayload;
+        })()
       },
       (chunk: string) => {
         assistantReply += chunk;
