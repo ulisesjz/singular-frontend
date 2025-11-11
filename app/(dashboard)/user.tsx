@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { auth, signOut } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import Image from 'next/image';
 import {
   DropdownMenu,
@@ -11,23 +11,17 @@ import {
 } from '@/components/ui/dropdown-menu';
 import Link from 'next/link';
 import { doLogout } from '../login/actions';
-import { Bell } from 'lucide-react';
-import { ModeToggle } from '@/components/ui/mode-toggle';
 
 export async function User() {
   let session = await auth();
   let user = session?.user;
 
   return (
-    <div className="ml-auto md:grow-0 flex gap-2 items-center">
-
-      <Button variant="ghost" size="icon" className="relative rounded-full">
-        <Bell className="w-5 h-5" />
-        {/* <span className="absolute top-2.5 right-3 inline-flex items-center justify-center w-2 h-2 bg-primary rounded-full"></span> */}
-      </Button>
-
+    <div className="ml-auto md:grow-0 flex items-center gap-2">
       <div className="flex items-center gap-2 mr-2">
-        <span className='capitalize font-semibold'>{user?.name ? user.name : user?.email}</span>
+        <span className="capitalize font-semibold">
+          {user?.name ? user.name : user?.email}
+        </span>
       </div>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -61,7 +55,7 @@ export async function User() {
                   await doLogout();
                 }}
               >
-                <button type="submit">Sign Out</button>
+                <button type="submit">Cerrar Sesión</button>
               </form>
             </DropdownMenuItem>
           ) : (
@@ -71,7 +65,6 @@ export async function User() {
           )}
         </DropdownMenuContent>
       </DropdownMenu>
-      <ModeToggle />
-    </div >
+    </div>
   );
 }
