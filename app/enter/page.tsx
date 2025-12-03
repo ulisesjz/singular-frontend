@@ -80,7 +80,7 @@ export default function page({ }: Props) {
   const pauseSteps = [
     {
       _id: 'pause-1',
-      title: { mobile: 'Sigamos :)', desktop: '¡Gracias!' },
+      title: { mobile: 'Sigamos :)', desktop: 'Sigamos :)' },
       subtitle: {
         mobile: [
           'Así conocemos qué te mueve, cómo pensás y qué te entusiasma.'
